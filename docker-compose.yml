@@ -28,7 +28,7 @@ services:
           },
           "data": {
             "redis": {
-              "url": "redis://redis:5432"
+              "url": "redis://redis:6379"
             }
           }
         }

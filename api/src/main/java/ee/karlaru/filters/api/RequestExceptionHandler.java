@@ -5,6 +5,7 @@ import ee.karlaru.filters.exception.FilterNotFoundException;
 import ee.karlaru.filters.exception.InvalidCriterionException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.h2.security.auth.AuthenticationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.nio.file.AccessDeniedException;
 
+@Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
 public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -31,24 +33,28 @@ public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {AuthenticationException.class, AccessDeniedException.class, AuthorizationDeniedException.class, InvalidBearerTokenException.class})
     public ResponseEntity<Object> handleAuthenticationException(Exception e, WebRequest request) {
         ErrorResponse response = new ErrorResponse(e.getMessage(), "ACCESS_DENIED");
+        log.error("Access denied", e);
         return handleExceptionInternal(e, response, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 
     @ExceptionHandler({FilterNotFoundException.class, ConstraintViolationException.class})
     public ResponseEntity<Object> handleFilterNotFoundException(FilterNotFoundException e, WebRequest request) {
         ErrorResponse response = new ErrorResponse(e.getMessage(), "FILTER_NOT_FOUND");
+        log.error("Filter not found", e);
         return handleExceptionInternal(e, response, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {InvalidCriterionException.class})
     public ResponseEntity<Object> handleUnprocessableCriterionException(InvalidCriterionException e, WebRequest request) {
         ErrorResponse response = new ErrorResponse(e.getMessage(), "INVALID_CRITERION");
+        log.error("Invalid criterion", e);
         return handleExceptionInternal(e, response, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Object> handleUnknownException(Exception ex, WebRequest request) {
         ErrorResponse response = new ErrorResponse("An unexpected error occurred", "INTERNAL_ERROR");
+        log.error("An unexpected error occurred", ex);
         return handleExceptionInternal(ex, response, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
@@ -59,6 +65,7 @@ public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
                                                              @NonNull HttpStatusCode statusCode,
                                                              WebRequest request) {
         request.setAttribute(REQUEST_ATTRIBUTE_NAME, body, RequestAttributes.SCOPE_REQUEST);
+        log.error("Error occurred", ex);
         return super.handleExceptionInternal(ex, body, headers, statusCode, request);
     }
 

@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  flyway:
+    clean-on-validation-error: true
+    clean-disabled: false
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/filters
+    driver-class-name: org.postgresql.Driver
+    username: karl
+    password: aru
+
+  jpa:
+    hibernate.ddl-auto: validate
+    show-sql: true
+
+  data:
+    redis:
+      url: redis://localhost:6379
+
+security:
+  jwt-secret-key: theSecret
+  jwt-expiration-in-minutes: 60
+  jwt-issuer: Mr Norris
+
+logging:
+  config: classpath:logging/logback-local.xml

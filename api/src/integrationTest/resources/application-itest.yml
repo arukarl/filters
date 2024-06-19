@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  flyway:
+    enabled: true
+    target: 1
+
+  jpa:
+    show-sql: true
+
+security:
+  jwt-secret-key: theSecret
+  jwt-expiration-in-minutes: 60
+  jwt-issuer: Mr Norris

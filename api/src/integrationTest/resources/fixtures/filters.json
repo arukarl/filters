@@ -1,0 +1,30 @@
+[
+  {
+    "uuid": "fc54d1b4-db3c-479d-9263-5df458a1562a",
+    "criteria": [
+      {
+        "type": "DATE",
+        "operator": "BEFORE",
+        "targetField": "releaseDate",
+        "targetValue": "2010-01-23"
+      },
+      {
+        "type": "NUMBER",
+        "operator": "GREATER_THAN",
+        "targetField": "views",
+        "targetValue": "150"
+      }
+    ]
+  },
+  {
+    "uuid": "a7c371bd-3a82-4157-b154-d6a40021681c",
+    "criteria": [
+      {
+        "type": "STRING",
+        "operator": "CONTAINS",
+        "targetField": "title",
+        "targetValue": "movie"
+      }
+    ]
+  }
+]

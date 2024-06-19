@@ -1,0 +1,63 @@
+### READ-ONLY access token
+GET http://localhost:8080/api/v1/auth/read
+
+> {% client.global.set("bearer_token", response.body); %}
+
+
+### READ + WRITE access token
+GET http://localhost:8080/api/v1/auth/write
+
+> {% client.global.set("bearer_token", response.body); %}
+
+
+### GET all criteria types and possible operations
+GET http://localhost:8080/api/v1/classifications
+Authorization: Bearer {{bearer_token}}
+
+
+### GET all existing filters
+GET http://localhost:8080/api/v1/filter
+Authorization: Bearer {{bearer_token}}
+
+
+### GET concrete filter
+GET http://localhost:8080/api/v1/filter/f47ac10b-58cc-4372-a567-0e02b2c3d479
+Authorization: Bearer {{bearer_token}}
+
+
+### Add filter
+PATCH http://localhost:8080/api/v1/filter
+Content-Type: application/json
+Authorization: Bearer {{bearer_token}}
+
+{
+  "criteria": [
+    {
+      "type": "STRING",
+      "targetField": "title",
+      "operator": "CONTAINS",
+      "targetValue": "my"
+    }
+  ]
+}
+
+
+### GET movies
+GET http://localhost:8080/api/v1/movie
+Authorization: Bearer {{bearer_token}}
+
+
+### Add movies
+POST http://localhost:8080/api/v1/movie
+Content-Type: application/json
+Authorization: Bearer {{bearer_token}}
+
+{
+  "title": "The Matrix",
+  "views": 200,
+  "releaseDate": "2024-06-18"
+}
+
+### FILTER movies
+GET http://localhost:8080/api/v1/movie?filter=f47ac10b-58cc-4372-a567-0e02b2c3d479
+Authorization: Bearer {{bearer_token}}

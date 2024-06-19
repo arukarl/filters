@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Jaws",
+    "views": 100,
+    "releaseDate": "1994-09-22"
+  },
+  {
+    "title": "The Godfather",
+    "views": 200,
+    "releaseDate": "2010-01-22"
+  },
+  {
+    "title": "The Dark Knight",
+    "views": 300,
+    "releaseDate": "2020-09-22"
+  }
+]

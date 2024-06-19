@@ -1,0 +1,11 @@
+{
+  "uuid": "a7c371bd-3a82-4157-b154-d6a40021681c",
+  "criteria": [
+    {
+      "type": "STRING",
+      "operator": "CONTAINS",
+      "targetField": "title",
+      "targetValue": "movie"
+    }
+  ]
+}

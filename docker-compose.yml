@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16.3-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: karl
+      POSTGRES_PASSWORD: aru
+      POSTGRES_DB: filters
+
+  redis:
+    image: redis:7.2.5-alpine
+    ports:
+      - "6379:6379"
+
+  app:
+    image: docker.io/karlaru/filters:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring": {
+          "profiles": {
+            "active": "local"
+          },
+          "datasource": {
+            "url": "jdbc:postgresql://db:5432/filters"
+          },
+          "data": {
+            "redis": {
+              "url": "redis://redis:5432"
+            }
+          }
+        }
+      }'
+    depends_on:
+      - db
+      - redis

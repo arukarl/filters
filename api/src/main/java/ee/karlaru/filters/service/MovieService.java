@@ -43,7 +43,7 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    @CacheEvict(value = MOVIES_CACHE, allEntries = true)
+    @CacheEvict(value = {MOVIES_CACHE, FILTERED_MOVIES_CACHE}, allEntries = true)
     public void addMovie(Movie movie) {
         log.info("Adding a movie");
         movieRepository.save(movie);

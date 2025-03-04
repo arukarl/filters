@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16.3-alpine
+    image: postgres:17.4-alpine
     ports:
       - "5432:5432"
     environment:
@@ -9,11 +9,11 @@ services:
       POSTGRES_DB: filters
 
   redis:
-    image: redis:7.2.5-alpine
+    image: redis:7.4-alpine
     ports:
       - "6379:6379"
 
-  app:
+  api:
     image: docker.io/karlaru/filters:latest
     ports:
       - "8080:8080"

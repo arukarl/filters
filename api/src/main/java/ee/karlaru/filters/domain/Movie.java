@@ -22,26 +22,26 @@ import java.util.Map;
 @Builder
 public class Movie implements Serializable {
 
-    @Id
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @JsonIgnore
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @NotNull
-    private String title;
+  @NotNull
+  private String title;
 
-    @NotNull
-    private Integer views;
+  @NotNull
+  private Integer views;
 
-    @NotNull
-    private Date releaseDate;
+  @NotNull
+  private Date releaseDate;
 
-    public static Map<String, String> mapToTypes() {
-        return Map.of(
-                "title", "STRING",
-                "views", "NUMBER",
-                "releaseDate", "DATE"
-        );
-    }
+  public static Map<String, String> mapToTypes() {
+    return Map.of(
+        "title", "STRING",
+        "views", "NUMBER",
+        "releaseDate", "DATE"
+    );
+  }
 
 }

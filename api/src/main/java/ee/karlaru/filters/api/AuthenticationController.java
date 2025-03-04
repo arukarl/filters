@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    private final AuthenticationService authenticationService;
+  private final AuthenticationService authenticationService;
 
 
-    @GetMapping("/read")
-    public String getReadAccessToken() {
-        return authenticationService.generateReadOnlyToken();
-    }
+  @GetMapping("/read")
+  public String getReadAccessToken() {
+    return authenticationService.generateReadOnlyToken();
+  }
 
-    @GetMapping("/write")
-    public String getWriteAccessToken() {
-        return authenticationService.generateWriteToken();
-    }
+  @GetMapping("/write")
+  public String getWriteAccessToken() {
+    return authenticationService.generateWriteToken();
+  }
 
 }

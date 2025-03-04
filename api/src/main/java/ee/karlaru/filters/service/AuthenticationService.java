@@ -11,17 +11,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final TokenFactory tokenFactory;
+  private final TokenFactory tokenFactory;
 
-    public String generateReadOnlyToken() {
-        log.info("Generating read-only token");
-        String[] roles = {UserRole.READ.name()};
-        return tokenFactory.create(roles);
-    }
+  public String generateReadOnlyToken() {
+    log.info("Generating read-only token");
+    String[] roles = {UserRole.READ.name()};
+    return tokenFactory.create(roles);
+  }
 
-    public String generateWriteToken() {
-        log.info("Generating full access token");
-        String[] roles = {UserRole.READ.name(), UserRole.WRITE.name()};
-        return tokenFactory.create(roles);
-    }
+  public String generateWriteToken() {
+    log.info("Generating full access token");
+    String[] roles = {UserRole.READ.name(), UserRole.WRITE.name()};
+    return tokenFactory.create(roles);
+  }
 }

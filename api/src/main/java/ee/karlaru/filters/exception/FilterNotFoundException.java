@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class FilterNotFoundException extends RuntimeException {
 
-    public FilterNotFoundException(String message) {
-        super(message);
-    }
+  public FilterNotFoundException(String message) {
+    super(message);
+  }
 }

@@ -28,55 +28,57 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("itest")
 class AuthenticationTests {
 
-	private final Path createFilter = Path.of("src/integrationTest/resources/fixtures/create-filter.json");
+  private final Path createFilter = Path.of(
+      "src/integrationTest/resources/fixtures/create-filter.json");
 
-	@Autowired private MockMvc mvc;
-	@Autowired private TokenVerifier tokenVerifier;
-
-
-	@Test
-	void shouldReturnReadOnlyRoleJwtToken() throws Exception {
-		String jwtToken = mvc.perform(get("/api/v1/auth/read"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
-				.andReturn().getResponse().getContentAsString();
-
-		assertThat(jwtToken).isNotNull();
-        assertEquals(List.of(UserRole.READ.name()), tokenVerifier.getRoles(jwtToken));
+  @Autowired
+  private MockMvc mvc;
+  @Autowired
+  private TokenVerifier tokenVerifier;
 
 
-		// Test JwtAuthenticationProvider
-		mvc.perform(get("/api/v1/classifications")
-				.header("Authorization", "Bearer " + jwtToken))
-				.andExpect(MockMvcResultMatchers.status().isOk());
+  @Test
+  void shouldReturnReadOnlyRoleJwtToken() throws Exception {
+    String jwtToken = mvc.perform(get("/api/v1/auth/read"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
+        .andReturn().getResponse().getContentAsString();
 
-    }
+    assertThat(jwtToken).isNotNull();
+    assertEquals(List.of(UserRole.READ.name()), tokenVerifier.getRoles(jwtToken));
 
-	@Test
-	void shouldReturnReadWriteRoleJwtToken() throws Exception {
-		String jwtToken = mvc.perform(get("/api/v1/auth/write"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
-				.andReturn().getResponse().getContentAsString();
+    // Test JwtAuthenticationProvider
+    mvc.perform(get("/api/v1/classifications")
+            .header("Authorization", "Bearer " + jwtToken))
+        .andExpect(MockMvcResultMatchers.status().isOk());
 
-		assertThat(jwtToken).isNotNull();
-		assertEquals(
-				new HashSet<>(List.of(UserRole.WRITE.name(), UserRole.READ.name())),
-				new HashSet<>(tokenVerifier.getRoles(jwtToken)));
+  }
 
-	}
+  @Test
+  void shouldReturnReadWriteRoleJwtToken() throws Exception {
+    String jwtToken = mvc.perform(get("/api/v1/auth/write"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
+        .andReturn().getResponse().getContentAsString();
 
-	@Test
-	@WithMockUser(roles = {"READ"})
-	void shouldFailAuthorization() throws Exception {
-		final String newFilter = Files.readString(createFilter);
+    assertThat(jwtToken).isNotNull();
+    assertEquals(
+        new HashSet<>(List.of(UserRole.WRITE.name(), UserRole.READ.name())),
+        new HashSet<>(tokenVerifier.getRoles(jwtToken)));
 
-		mvc.perform(patch("/api/v1/filter")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(newFilter))
-				.andExpect(MockMvcResultMatchers.status().isUnauthorized())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(content().json("{\"message\":\"Access Denied\",\"code\":\"ACCESS_DENIED\"}"));
-	}
+  }
+
+  @Test
+  @WithMockUser(roles = {"READ"})
+  void shouldFailAuthorization() throws Exception {
+    final String newFilter = Files.readString(createFilter);
+
+    mvc.perform(patch("/api/v1/filter")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(newFilter))
+        .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().json("{\"message\":\"Access Denied\",\"code\":\"ACCESS_DENIED\"}"));
+  }
 
 }

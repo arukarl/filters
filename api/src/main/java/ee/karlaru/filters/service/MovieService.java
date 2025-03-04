@@ -23,29 +23,30 @@ import static ee.karlaru.filters.config.RedisConfig.MOVIES_CACHE;
 @RequiredArgsConstructor
 public class MovieService {
 
-    private final MovieRepository movieRepository;
-    private final FilterRepository filterRepository;
+  private final MovieRepository movieRepository;
+  private final FilterRepository filterRepository;
 
 
-    @Cacheable(FILTERED_MOVIES_CACHE)
-    public List<Movie> getMoviesWithFilters(UUID filterUuid) {
-        log.info("Fetching movies with filter {}", filterUuid);
-        Filter filter = filterRepository.findByUuid(filterUuid)
-                .orElseThrow(() -> new FilterNotFoundException("Filter %s not found".formatted(filterUuid)));
+  @Cacheable(FILTERED_MOVIES_CACHE)
+  public List<Movie> getMoviesWithFilters(UUID filterUuid) {
+    log.info("Fetching movies with filter {}", filterUuid);
+    Filter filter = filterRepository.findByUuid(filterUuid)
+        .orElseThrow(
+            () -> new FilterNotFoundException("Filter %s not found".formatted(filterUuid)));
 
-        MovieSpecification spec = new MovieSpecification(filter.getCriteria());
-        return movieRepository.findAll(spec);
-    }
+    MovieSpecification spec = new MovieSpecification(filter.getCriteria());
+    return movieRepository.findAll(spec);
+  }
 
-    @Cacheable(MOVIES_CACHE)
-    public List<Movie> getMovies() {
-        log.info("Fetching all movies");
-        return movieRepository.findAll();
-    }
+  @Cacheable(MOVIES_CACHE)
+  public List<Movie> getMovies() {
+    log.info("Fetching all movies");
+    return movieRepository.findAll();
+  }
 
-    @CacheEvict(value = {MOVIES_CACHE, FILTERED_MOVIES_CACHE}, allEntries = true)
-    public void addMovie(Movie movie) {
-        log.info("Adding a movie");
-        movieRepository.save(movie);
-    }
+  @CacheEvict(value = {MOVIES_CACHE, FILTERED_MOVIES_CACHE}, allEntries = true)
+  public void addMovie(Movie movie) {
+    log.info("Adding a movie");
+    movieRepository.save(movie);
+  }
 }

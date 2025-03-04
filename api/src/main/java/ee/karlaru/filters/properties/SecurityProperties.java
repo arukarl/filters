@@ -14,13 +14,13 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "security")
 public class SecurityProperties {
 
-    @NotBlank
-    private String jwtSecretKey;
+  @NotBlank
+  private String jwtSecretKey;
 
-    @NotNull
-    private Integer jwtExpirationInMinutes;
+  @NotNull
+  private Integer jwtExpirationInMinutes;
 
-    @NotBlank
-    private String jwtIssuer;
+  @NotBlank
+  private String jwtIssuer;
 
 }

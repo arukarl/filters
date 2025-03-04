@@ -22,28 +22,28 @@ import java.util.UUID;
 @RequestMapping("/api/v1/movie")
 public class MovieController {
 
-    private final MovieService movieService;
+  private final MovieService movieService;
 
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_READ')")
-    @Operation(security = { @SecurityRequirement(name = "READ role JWT token") })
-    public List<Movie> getMovies() {
-        return movieService.getMovies();
-    }
+  @GetMapping
+  @PreAuthorize("hasRole('ROLE_READ')")
+  @Operation(security = {@SecurityRequirement(name = "READ role JWT token")})
+  public List<Movie> getMovies() {
+    return movieService.getMovies();
+  }
 
-    @PostMapping
-    @PreAuthorize("hasRole('ROLE_WRITE')")
-    @Operation(security = { @SecurityRequirement(name = "WRITE role JWT token") })
-    public void addMovie(@RequestBody @Validated Movie movie) {
-        movieService.addMovie(movie);
-    }
+  @PostMapping
+  @PreAuthorize("hasRole('ROLE_WRITE')")
+  @Operation(security = {@SecurityRequirement(name = "WRITE role JWT token")})
+  public void addMovie(@RequestBody @Validated Movie movie) {
+    movieService.addMovie(movie);
+  }
 
-    @GetMapping("/filtered")
-    @PreAuthorize("hasRole('ROLE_READ')")
-    @Operation(security = { @SecurityRequirement(name = "READ role JWT token") })
-    public List<Movie> getMoviesWithFilters(@RequestParam UUID filter) {
-        return movieService.getMoviesWithFilters(filter);
-    }
+  @GetMapping("/filtered")
+  @PreAuthorize("hasRole('ROLE_READ')")
+  @Operation(security = {@SecurityRequirement(name = "READ role JWT token")})
+  public List<Movie> getMoviesWithFilters(@RequestParam UUID filter) {
+    return movieService.getMoviesWithFilters(filter);
+  }
 
 }

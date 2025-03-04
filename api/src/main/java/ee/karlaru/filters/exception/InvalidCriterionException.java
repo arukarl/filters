@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class InvalidCriterionException extends RuntimeException {
 
-    public InvalidCriterionException(String message) {
-        super(message);
-    }
+  public InvalidCriterionException(String message) {
+    super(message);
+  }
 }

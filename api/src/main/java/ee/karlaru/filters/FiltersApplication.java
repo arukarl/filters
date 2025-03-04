@@ -8,8 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 public class FiltersApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FiltersApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(FiltersApplication.class, args);
+  }
 
 }

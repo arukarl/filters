@@ -17,37 +17,37 @@ import javax.sql.DataSource;
 @Testcontainers
 public class TestPostgresConfig {
 
-    @Container
-    @SuppressWarnings("resource")
-    public static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgres:16.3-alpine").asCompatibleSubstituteFor("postgres"))
-            .withDatabaseName("filters")
-            .withUsername("karl")
-            .withPassword("aru")
-            .withExposedPorts(5432);
+  @Container
+  @SuppressWarnings("resource")
+  public static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+      DockerImageName.parse("postgres:17.4-alpine").asCompatibleSubstituteFor("postgres"))
+      .withDatabaseName("filters")
+      .withUsername("karl")
+      .withPassword("aru")
+      .withExposedPorts(5432);
 
-    @Bean
-    @Primary
-    @ConfigurationProperties("datasource.postgresql")
-    public DataSourceProperties getDatasourceProperties() {
-        return new DataSourceProperties();
-    }
+  @Bean
+  @Primary
+  @ConfigurationProperties("datasource.postgresql")
+  public DataSourceProperties getDatasourceProperties() {
+    return new DataSourceProperties();
+  }
 
-    @Bean
-    public DataSource getDataSource() {
-        postgres.start();
+  @Bean
+  public DataSource getDataSource() {
+    postgres.start();
 
-        String url = String.format("jdbc:postgresql://%s:%d/%s",
-                postgres.getHost(),
-                postgres.getMappedPort(5432),
-                postgres.getDatabaseName()
-                );
-        getDatasourceProperties().setUrl(url);
-        getDatasourceProperties().setDriverClassName(Driver.class.getName());
+    String url = String.format("jdbc:postgresql://%s:%d/%s",
+        postgres.getHost(),
+        postgres.getMappedPort(5432),
+        postgres.getDatabaseName()
+    );
+    getDatasourceProperties().setUrl(url);
+    getDatasourceProperties().setDriverClassName(Driver.class.getName());
 
-        return getDatasourceProperties().initializeDataSourceBuilder()
-                .username(postgres.getUsername())
-                .password(postgres.getPassword())
-                .build();
-    }
+    return getDatasourceProperties().initializeDataSourceBuilder()
+        .username(postgres.getUsername())
+        .password(postgres.getPassword())
+        .build();
+  }
 }

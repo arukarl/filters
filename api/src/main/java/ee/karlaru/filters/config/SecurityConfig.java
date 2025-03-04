@@ -22,28 +22,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationProvider authenticationProvider;
+  private final JwtAuthenticationProvider authenticationProvider;
 
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authenticationProvider(authenticationProvider)
-                .authorizeHttpRequests(request ->
-                        request
-                                .requestMatchers("/api/v1/auth/**","/v3/api-docs/**","/swagger-ui/**").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))
-                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .build();
-    }
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http
+        .authenticationProvider(authenticationProvider)
+        .authorizeHttpRequests(request ->
+            request
+                .requestMatchers("/api/v1/auth/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .anyRequest().authenticated()
+        )
+        .csrf(AbstractHttpConfigurer::disable)
+        .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()))
+        .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+        .build();
+  }
 
-    @Bean
-    public AuthorizationEventPublisher authorizationEventPublisher(ApplicationEventPublisher eventPublisher) {
-        return new SpringAuthorizationEventPublisher(eventPublisher);
-    }
+  @Bean
+  public AuthorizationEventPublisher authorizationEventPublisher(
+      ApplicationEventPublisher eventPublisher) {
+    return new SpringAuthorizationEventPublisher(eventPublisher);
+  }
 
 }

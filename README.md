@@ -18,34 +18,40 @@ Access [Swagger](http://localhost:8080/swagger-ui/index.html)
 - Filter has a list of **Criterions**
 - **Criterion** is an abstract class that must be extended to create criterion for concrete type
 - All **Criterion** implementations should be collectable as a list at runtime
-- Criteria list should be mapped to **Classifications** that can be later used by Frondend to show correct options for each field
+- Criteria list should be mapped to **Classifications** that can be later used by Frondend to show
+  correct options for each field
 - Endpoints (except for authentication) are secured by a JWT Bearer token
 
 To make it easier to test, I've created a **Movie** entity that can be used to test the filters.
 
 - All movies can be fetched from database; using redis as cache
 - Filtered movies list can be queried by a filter uuid; using redis as cache
-- Change in filter results in a new filter; filtered list of movies with old filter is evicted from cache
-
+- Change in filter results in a new filter; filtered list of movies with old filter is evicted from
+  cache
 
 ## Example requests
 
 ### Authenticate for read-write or read-only access
+
 `GET /api/v1/auth/write` or `GET /api/v1/auth/read`
 
-
 JWT token
+
 ```
 eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJNciBOb3JyaXMiLCJzdWIiOiJBc2tFbmQiLCJST0xFIjpbIlJFQUQiLCJXUklURSJdLCJleHAiOjE3MTg4MTI5MTd9.3qmL41bnte-G8xTIh2oRt0sh0LILAcrXj2DnzfCWZ7GZ8Sd44lidcRKTnS6XR7uJ
 ```
+
 Header
+
 ```json
 {
 "alg": "HS384",
 "typ": "JWT"
 }
 ```
+
 Payload
+
 ```json
 {
   "iss": "Mr Norris",
@@ -57,8 +63,11 @@ Payload
   "exp": 1718812917
 }
 ```
+
 ---
-### Get available fields and criteria 
+
+### Get available fields and criteria
+
 `GET /api/v1/classifications`
 
 ```json
@@ -104,7 +113,8 @@ Payload
 
 ---
 
-### Create filter 
+### Create filter
+
 `PATCH /api/v1/filter`
 
 ```json
@@ -123,6 +133,7 @@ Payload
 ---
 
 ### Get filtered list of movies
+
 `GET /api/v1/movie/filtered?filter=f47ac10b-58cc-4372-a567-0e02b2c3d479`
 
 ```json
@@ -134,4 +145,5 @@ Payload
   }
 ]
 ```
+
 ### Other endpoints @ [Swagger](http://localhost:8080/swagger-ui/index.html) or [docs](/api/docs/requests.example.http)

@@ -41,29 +41,31 @@ import java.util.Map;
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Criterion {
 
-    @JsonIgnore
-    public abstract String getName();
-    public abstract Predicate toPredicate(Root<?> root, CriteriaBuilder criteriaBuilder);
-    public abstract Map<String, List<String>> toClassification();
+  @JsonIgnore
+  public abstract String getName();
 
-    @Id
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  public abstract Predicate toPredicate(Root<?> root, CriteriaBuilder criteriaBuilder);
 
-    @NotNull
-    private String operator;
+  public abstract Map<String, List<String>> toClassification();
 
-    @NotNull
-    private String targetField;
+  @Id
+  @JsonIgnore
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @NotNull
-    private String targetValue;
+  @NotNull
+  private String operator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "filter_id")
-    @JsonIgnore
-    @JsonBackReference
-    private Filter filter;
+  @NotNull
+  private String targetField;
+
+  @NotNull
+  private String targetValue;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "filter_id")
+  @JsonIgnore
+  @JsonBackReference
+  private Filter filter;
 
 }

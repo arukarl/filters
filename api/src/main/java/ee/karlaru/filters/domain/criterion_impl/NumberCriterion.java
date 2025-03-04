@@ -28,41 +28,46 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class NumberCriterion extends Criterion {
 
-    @JsonIgnore
-    public static final String NAME = "NUMBER";
+  @JsonIgnore
+  public static final String NAME = "NUMBER";
 
-    public enum Condition {
-        GREATER_THAN,
-        GREATER_THAN_OR_EQUAL,
-        EQUAL,
-        LESS_THAN_OR_EQUAL,
-        LESS_THAN;
-    }
+  public enum Condition {
+    GREATER_THAN,
+    GREATER_THAN_OR_EQUAL,
+    EQUAL,
+    LESS_THAN_OR_EQUAL,
+    LESS_THAN;
+  }
 
-    @Override
-    public Map<String, List<String>> toClassification() {
-        return Map.of(NAME, Arrays
-                .stream(Condition.values())
-                .map(Enum::name)
-                .toList());
-    }
+  @Override
+  public Map<String, List<String>> toClassification() {
+    return Map.of(NAME, Arrays
+        .stream(Condition.values())
+        .map(Enum::name)
+        .toList());
+  }
 
-    @Override
-    public Predicate toPredicate(Root<?> root, CriteriaBuilder criteriaBuilder) {
-        Condition condition = Condition.valueOf(getOperator());
-        return switch (condition) {
-            case GREATER_THAN -> criteriaBuilder.gt(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
-            case GREATER_THAN_OR_EQUAL -> criteriaBuilder.ge(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
-            case EQUAL -> criteriaBuilder.equal(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
-            case LESS_THAN_OR_EQUAL -> criteriaBuilder.le(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
-            case LESS_THAN -> criteriaBuilder.lt(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
-        };
-    }
+  @Override
+  public Predicate toPredicate(Root<?> root, CriteriaBuilder criteriaBuilder) {
+    Condition condition = Condition.valueOf(getOperator());
+    return switch (condition) {
+      case GREATER_THAN ->
+          criteriaBuilder.gt(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
+      case GREATER_THAN_OR_EQUAL ->
+          criteriaBuilder.ge(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
+      case EQUAL ->
+          criteriaBuilder.equal(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
+      case LESS_THAN_OR_EQUAL ->
+          criteriaBuilder.le(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
+      case LESS_THAN ->
+          criteriaBuilder.lt(root.get(getTargetField()), Double.parseDouble(getTargetValue()));
+    };
+  }
 
-    @Override
-    @Transient
-    public String getName(){
-        return NAME;
-    }
-    
+  @Override
+  @Transient
+  public String getName() {
+    return NAME;
+  }
+
 }

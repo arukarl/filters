@@ -14,17 +14,18 @@ import java.util.List;
 
 public class MovieSpecification implements Specification<Movie> {
 
-    private final transient List<Criterion> filters;
+  private final transient List<Criterion> filters;
 
-    public MovieSpecification(List<Criterion> filters) {
-        this.filters = filters;
-    }
+  public MovieSpecification(List<Criterion> filters) {
+    this.filters = filters;
+  }
 
-    @Override
-    public Predicate toPredicate(@NonNull Root<Movie> root, @NonNull CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Predicate[] predicates = filters.stream()
-                .map(filter -> filter.toPredicate(root, criteriaBuilder))
-                .toArray(Predicate[]::new);
-        return criteriaBuilder.and(predicates);
-    }
+  @Override
+  public Predicate toPredicate(@NonNull Root<Movie> root, @NonNull CriteriaQuery<?> query,
+      CriteriaBuilder criteriaBuilder) {
+    Predicate[] predicates = filters.stream()
+        .map(filter -> filter.toPredicate(root, criteriaBuilder))
+        .toArray(Predicate[]::new);
+    return criteriaBuilder.and(predicates);
+  }
 }

@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class ClassificationController {
 
-    private final FilterService filterService;
+  private final FilterService filterService;
 
 
-    @GetMapping("/classifications")
-    @PreAuthorize("hasRole('ROLE_READ')")
-    @Operation(security = { @SecurityRequirement(name = "READ role JWT token") })
-    public Classifications getClassifications() {
-        return filterService.getClassifications();
-    }
+  @GetMapping("/classifications")
+  @PreAuthorize("hasRole('ROLE_READ')")
+  @Operation(security = {@SecurityRequirement(name = "READ role JWT token")})
+  public Classifications getClassifications() {
+    return filterService.getClassifications();
+  }
 
 }

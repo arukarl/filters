@@ -21,28 +21,28 @@ import java.util.UUID;
 @RequestMapping("/api/v1/filter")
 public class FilterController {
 
-    private final FilterService filterService;
+  private final FilterService filterService;
 
 
-    @PatchMapping
-    @PreAuthorize("hasRole('ROLE_WRITE')")
-    @Operation(security = { @SecurityRequirement(name = "WRITE role JWT token") })
-    public UUID updateFilter(@RequestBody @Valid Filter filter) {
-        return filterService.updateFilter(filter);
-    }
+  @PatchMapping
+  @PreAuthorize("hasRole('ROLE_WRITE')")
+  @Operation(security = {@SecurityRequirement(name = "WRITE role JWT token")})
+  public UUID updateFilter(@RequestBody @Valid Filter filter) {
+    return filterService.updateFilter(filter);
+  }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_READ')")
-    @Operation(security = { @SecurityRequirement(name = "READ role JWT token") })
-    public Iterable<Filter> getFilters() {
-        return filterService.getFilters();
-    }
+  @GetMapping
+  @PreAuthorize("hasRole('ROLE_READ')")
+  @Operation(security = {@SecurityRequirement(name = "READ role JWT token")})
+  public Iterable<Filter> getFilters() {
+    return filterService.getFilters();
+  }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_READ')")
-    @Operation(security = { @SecurityRequirement(name = "READ role JWT token") })
-    public Filter getFilter(@PathVariable UUID id) {
-        return filterService.getFilter(id);
-    }
+  @GetMapping("/{id}")
+  @PreAuthorize("hasRole('ROLE_READ')")
+  @Operation(security = {@SecurityRequirement(name = "READ role JWT token")})
+  public Filter getFilter(@PathVariable UUID id) {
+    return filterService.getFilter(id);
+  }
 
 }

@@ -25,23 +25,25 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Filter {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private Integer id;
 
-    @Builder.Default private UUID uuid = UUID.randomUUID();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @JsonIgnore
+  private Integer id;
 
-    @Size(max = 50)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "filter")
-    @Builder.Default
-    private List<Criterion> criteria = new ArrayList<>();
+  @Builder.Default
+  private UUID uuid = UUID.randomUUID();
 
-    @PrePersist
-    @PreUpdate
-    private void updateCriteria() {
-        for (Criterion criterion : criteria) {
-            criterion.setFilter(this);
-        }
+  @Size(max = 50)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "filter")
+  @Builder.Default
+  private List<Criterion> criteria = new ArrayList<>();
+
+  @PrePersist
+  @PreUpdate
+  private void updateCriteria() {
+    for (Criterion criterion : criteria) {
+      criterion.setFilter(this);
     }
+  }
 }

@@ -17,16 +17,15 @@ import static ee.karlaru.filters.config.RedisConfig.FILTERED_MOVIES_CACHE;
 @RequiredArgsConstructor
 public class DataChangedEventListener {
 
-    private final CacheManager cacheManager;
+  private final CacheManager cacheManager;
 
-    @EventListener
-    public void handleFilterChangedEvent(@NotNull FilterChangedEvent event) {
-        log.debug("Evicting cache for movies filtered with UUID: {}", event.filterUuid());
+  @EventListener
+  public void handleFilterChangedEvent(@NotNull FilterChangedEvent event) {
+    log.debug("Evicting cache for movies filtered with UUID: {}", event.filterUuid());
 
-        Objects.requireNonNull(
-                cacheManager.getCache(FILTERED_MOVIES_CACHE))
-                .evictIfPresent(event.filterUuid()
+    Objects.requireNonNull(cacheManager.getCache(FILTERED_MOVIES_CACHE))
+        .evictIfPresent(event.filterUuid()
         );
-    }
+  }
 
 }

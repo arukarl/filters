@@ -11,16 +11,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Configuration
 public class TestRedisConfig {
 
-    @Container
-    private static final GenericContainer<?> redis = new GenericContainer<>("redis:7.2.5-alpine")
-            .withExposedPorts(6379);
+  @Container
+  private static final GenericContainer<?> redis = new GenericContainer<>("redis:7.4-alpine")
+      .withExposedPorts(6379);
 
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        redis.start();
+  @Bean
+  public LettuceConnectionFactory redisConnectionFactory() {
+    redis.start();
 
-        return new LettuceConnectionFactory(
-                redis.getHost(),
-                redis.getMappedPort(6379));
-    }
+    return new LettuceConnectionFactory(
+        redis.getHost(),
+        redis.getMappedPort(6379));
+  }
 }

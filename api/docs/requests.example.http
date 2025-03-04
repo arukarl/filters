@@ -1,13 +1,17 @@
 ### READ-ONLY access token
 GET http://localhost:8080/api/v1/auth/read
 
-> {% client.global.set("bearer_token", response.body); %}
+> {%
+  client.global.set("bearer_token", response.body);
+%}
 
 
 ### READ + WRITE access token
 GET http://localhost:8080/api/v1/auth/write
 
-> {% client.global.set("bearer_token", response.body); %}
+> {%
+  client.global.set("bearer_token", response.body);
+%}
 
 
 ### GET all criteria types and possible operations

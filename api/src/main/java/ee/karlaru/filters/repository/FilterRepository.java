@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface FilterRepository extends JpaRepository<Filter, Long> {
 
-    Optional<Filter> findByUuid(UUID uuid);
+  Optional<Filter> findByUuid(UUID uuid);
 }

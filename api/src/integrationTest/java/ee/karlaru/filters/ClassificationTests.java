@@ -21,19 +21,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("itest")
 class ClassificationTests {
 
-	private final Path classificationsPath = Path.of("src/integrationTest/resources/fixtures/classifications.json");
+  private final Path classificationsPath = Path.of(
+      "src/integrationTest/resources/fixtures/classifications.json");
 
-	@Autowired private MockMvc mvc;
+  @Autowired
+  private MockMvc mvc;
 
-	@Test
-	@WithMockUser(roles = "READ")
-	void shouldReturnClassifications() throws Exception {
-		String expectedClassifications = Files.readString(classificationsPath);
+  @Test
+  @WithMockUser(roles = "READ")
+  void shouldReturnClassifications() throws Exception {
+    String expectedClassifications = Files.readString(classificationsPath);
 
-		mvc.perform(get("/api/v1/classifications"))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(content().json(expectedClassifications));
-    }
+    mvc.perform(get("/api/v1/classifications"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(expectedClassifications));
+  }
 
 }

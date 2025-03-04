@@ -16,24 +16,24 @@ import java.util.List;
 @Component
 public class TokenVerifier {
 
-    private final JWTVerifier jwtVerifier;
+  private final JWTVerifier jwtVerifier;
 
-    public TokenVerifier(SecurityProperties securityProperties) {
-        Algorithm secretKey = Algorithm.HMAC384(securityProperties.getJwtSecretKey());
-        this.jwtVerifier = JWT.require(secretKey)
-                .withIssuer(securityProperties.getJwtIssuer())
-                .acceptExpiresAt(securityProperties.getJwtExpirationInMinutes() * 60L)
-                .build();
-    }
+  public TokenVerifier(SecurityProperties securityProperties) {
+    Algorithm secretKey = Algorithm.HMAC384(securityProperties.getJwtSecretKey());
+    this.jwtVerifier = JWT.require(secretKey)
+        .withIssuer(securityProperties.getJwtIssuer())
+        .acceptExpiresAt(securityProperties.getJwtExpirationInMinutes() * 60L)
+        .build();
+  }
 
-    public List<String> getRoles(@NonNull String accessToken) {
-        log.debug("Verifying access token");
-        try {
-            DecodedJWT decodedJWT = jwtVerifier.verify(accessToken);
-            return decodedJWT.getClaim("ROLE").asList(String.class);
-        } catch (Exception e) {
-            log.error("Failed to verify access token", e);
-            throw new InvalidBearerTokenException("Failed to verify access token");
-        }
+  public List<String> getRoles(@NonNull String accessToken) {
+    log.debug("Verifying access token");
+    try {
+      DecodedJWT decodedJWT = jwtVerifier.verify(accessToken);
+      return decodedJWT.getClaim("ROLE").asList(String.class);
+    } catch (Exception e) {
+      log.error("Failed to verify access token", e);
+      throw new InvalidBearerTokenException("Failed to verify access token");
     }
+  }
 }

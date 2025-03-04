@@ -31,6 +31,11 @@ jib {
     }
 }
 
+tasks.named("jib") {
+    dependsOn("test")
+    dependsOn("integrationTest")
+}
+
 repositories {
     mavenCentral()
 }
